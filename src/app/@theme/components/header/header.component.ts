@@ -9,8 +9,8 @@ import {ActivatedRoute, Router} from "@angular/router";
 export class HeaderComponent {
 
   navItems: navItem[] = [
-    {label: 'Dashboard', route: 'dashboard'},
-    {label: 'Invoices', route: 'invoices'}
+    {label: 'Dashboard', route: 'dashboard', active: false},
+    {label: 'Invoices', route: 'invoices', active: false}
   ]
 
   constructor(
@@ -23,5 +23,6 @@ export class HeaderComponent {
 
 interface navItem {
   label: string,
-  route: string
+  route: string,
+  active: boolean
 }

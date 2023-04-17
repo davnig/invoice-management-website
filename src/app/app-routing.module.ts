@@ -1,18 +1,19 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from "@angular/router";
-import {DashboardComponent} from "./dashboard/dashboard.component";
+import {NotFoundComponent} from "./@theme/components/not-found/not-found.component";
 
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
+    redirectTo: 'management',
     pathMatch: 'full'
   },
   {
-    path: 'dashboard',
-    component: DashboardComponent,
+    path: 'management',
+    loadChildren: () => import('./invoices-management/invoices-management.module')
+      .then(m => m.InvoicesManagementModule),
   },
-  {path: '**', redirectTo: 'dashboard'},
+  {path: '**', component: NotFoundComponent},
 ];
 
 @NgModule({

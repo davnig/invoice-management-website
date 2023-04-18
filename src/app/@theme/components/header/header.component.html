@@ -1,4 +1,4 @@
-<header class="bg-gray-800">
+<header class="bg-white shadow">
   <nav class="flex items-center justify-between p-6">
     <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
          alt="Invoice Management Tool">
@@ -6,7 +6,7 @@
       <button
         *ngFor="let navItem of navItems"
         [routerLink]="[navItem.route]"
-        class="text-gray-300 hover:bg-gray-700 hover:text-white focus:bg-gray-900 focus:text-white rounded-md px-3 py-2 text-sm font-medium"
+        class="text-gray-800 hover:bg-gray-100 focus:text-violet-700 rounded-md px-3 py-2 text-sm font-medium"
       >
         {{navItem.label}}
       </button>
@@ -32,7 +32,7 @@
     </div>
     <div class="hidden lg:flex">
       <a href="/login"
-         class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Log
+         class="text-gray-800 hover:bg-gray-100 rounded-md px-3 py-2 text-sm font-medium">Log
         in</a>
     </div>
   </nav>

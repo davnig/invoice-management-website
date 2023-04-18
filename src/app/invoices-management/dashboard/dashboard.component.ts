@@ -7,4 +7,7 @@ import {Component} from '@angular/core';
 })
 export class DashboardComponent {
 
+  revenue = 15050.50;
+  income = 7560.35;
+
 }

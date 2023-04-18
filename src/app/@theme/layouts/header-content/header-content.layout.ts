@@ -1,11 +1,20 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   selector: 'app-header-content',
   styleUrls: ['./header-content.layout.css'],
   template: `
-      <app-header></app-header>
-      <router-outlet></router-outlet>
+    <div class="flex flex-col h-full">
+      <div class="grow-0">
+        <app-header></app-header>
+      </div>
+      <div class="grow">
+        <router-outlet></router-outlet>
+      </div>
+      <div class="grow-0">
+        <app-footer></app-footer>
+      </div>
+    </div>
   `
 })
 export class HeaderContentLayoutComponent {

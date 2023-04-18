@@ -8,6 +8,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class HeaderComponent {
 
+  isMobileMenuOpen = false;
   navItems: navItem[] = [
     {label: 'Dashboard', route: 'dashboard', active: false},
     {label: 'Invoices', route: 'invoices', active: false}
@@ -17,6 +18,15 @@ export class HeaderComponent {
     private readonly _activatedRoute: ActivatedRoute,
     private readonly _router: Router,
   ) {
+  }
+
+  onMobileMenuClick(): void {
+    if (this.isMobileMenuOpen) {
+      this.isMobileMenuOpen = false;
+      return;
+    }
+    this.isMobileMenuOpen = true;
+    console.log(this.isMobileMenuOpen);
   }
 
 }

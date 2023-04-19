@@ -1,74 +1,48 @@
-<header class="bg-white">
-  <nav>
-    <div class="flex items-center justify-between p-6">
-      <img class="h-8 w-auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
-           alt="Invoice Management Tool">
-      <div class="hidden lg:flex lg:gap-x-12">
-        <a *ngFor="let navItem of navItems" [routerLink]="[navItem.route]" routerLinkActive="text-indigo-600"
-           class="text-gray-800 hover:bg-gray-100 active:bg-gray-200 focus:text-indigo-600 rounded-md px-3 py-2 font-medium"
-        >
-          {{navItem.label}}
-        </a>
-      </div>
-      <div class="hidden lg:flex">
-        <button type="button"
-                class="flex min-w-full items-center justify-start gap-x-2 rounded-md p-2 text-gray-800 font-medium hover:bg-gray-100 active:bg-gray-200"
-                [routerLink]="['/login']">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-               stroke="currentColor" class="w-6 h-6">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                  d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"/>
-          </svg>
-          Log in
-        </button>
-      </div>
-      <div class="-mr-2 flex lg:hidden">
-        <!-- Mobile menu button -->
-        <button type="button"
-                class="items-center justify-center rounded-md p-2 text-gray-800 hover:bg-gray-100 active:bg-gray-200"
+<nav class="bg-white fixed h-5rem w-full">
+  <div class="flex align-items-center justify-content-between h-5rem px-5">
+    <img height="32em" width="auto" src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
+         alt="Invoice Management Tool">
+    <div class="hidden lg:flex lg:gap-2 text-gray-800">
+      <a *ngFor="let navItem of navItems"
+         class="p-5 border-round-md hover:bg-gray-100 active:bg-gray-200"
+         [routerLink]="[navItem.route]" [routerLinkActive]="['text-indigo-600', 'font-semibold']">
+        {{navItem.label}}
+      </a>
+    </div>
+    <a class=" hidden lg:inline p-5 min-w-max border-round-md hover:bg-gray-100 active:bg-gray-200"
+       [routerLink]="['/login']">
+      Log in
+    </a>
+    <div class="-mr-2 flex lg:hidden">
+      <!-- Mobile menu button -->
+      <p-button icon="pi pi-bars"
+                styleClass="p-button-text p-button-secondary"
                 (click)="onMobileMenuClick()">
-          <span class="sr-only">Open main menu</span>
-          <!-- Menu open: "hidden", Menu closed: "block" -->
-          <svg [ngClass]="{'hidden': isMobileMenuOpen, 'block': !isMobileMenuOpen}"
-               class="h-6 w-6" fill="none"
-               viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-               aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5"/>
-          </svg>
-          <!-- Menu open: "block", Menu closed: "hidden" -->
-          <svg [ngClass]="{'hidden': !isMobileMenuOpen, 'block': isMobileMenuOpen}"
-               class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-               aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
-          </svg>
-        </button>
-      </div>
+      </p-button>
+      <p-button icon="pi pi-times"
+                styleClass="hidden p-button-text p-button-secondary"
+                (click)="isMobileMenuOpen = true">
+      </p-button>
     </div>
+  </div>
+</nav>
 
-    <!-- Mobile menu, show/hide based on menu state. -->
-    <div [ngClass]="{'hidden': !isMobileMenuOpen, 'block': isMobileMenuOpen}"
-         class="lg:hidden" id="mobile-menu">
-      <div class="space-y-1 px-2 py-3 sm:px-3">
-        <a *ngFor="let navItem of navItems" [routerLink]="[navItem.route]" routerLinkActive="text-indigo-600"
-           class="block text-gray-800 hover:bg-gray-100 active:bg-gray-200 focus:text-indigo-600 rounded-md px-3 py-2 font-medium">
-          {{navItem.label}}
-        </a>
-      </div>
-      <div class="border-t border-gray-100 pb-3">
-        <div class="mt-3 space-y-1 px-2">
-          <button type="button"
-                  class="flex items-center justify-start gap-x-2 min-w-full rounded-md p-2 text-gray-800 font-medium hover:bg-gray-100 active:bg-gray-200"
-                  [routerLink]="['/login']">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                 stroke="currentColor" class="w-6 h-6">
-              <path stroke-linecap="round" stroke-linejoin="round"
-                    d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"/>
-            </svg>
-            Log in
-          </button>
-        </div>
-      </div>
+<!-- Mobile menu, show/hide based on menu state. -->
+<p-sidebar [(visible)]="isMobileMenuOpen" position="right" [transitionOptions]="'.3s cubic-bezier(0, 0, 0.2, 1)'">
+  <div class="px-3 py-3 text-gray-800">
+    <a *ngFor="let navItem of navItems"
+       class="block min-w-max mt-1 p-3 border-round-md hover:bg-gray-100 active:bg-gray-200"
+       [routerLink]="[navItem.route]" (click)="isMobileMenuOpen = false"
+       [routerLinkActive]="['text-indigo-600', 'font-semibold']">
+      {{navItem.label}}
+    </a>
+  </div>
+  <div class="border-top-1 border-gray-100">
+    <div class="px-3 py-3 text-gray-800">
+      <a class="block min-w-max mt-1 p-3 border-round-md font-medium hover:bg-gray-100 active:bg-gray-200"
+         [routerLink]="['/login']">
+        Log in
+      </a>
     </div>
-
-  </nav>
-</header>
+  </div>
+</p-sidebar>

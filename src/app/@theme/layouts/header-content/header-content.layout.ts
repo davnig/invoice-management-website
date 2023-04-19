@@ -4,16 +4,17 @@ import {Component} from '@angular/core';
   selector: 'app-header-content',
   styleUrls: ['./header-content.layout.css'],
   template: `
-    <div class="flex flex-col h-full">
-      <div class="grow-0">
-        <app-header></app-header>
-      </div>
-      <div class="grow">
+    <header>
+      <app-header></app-header>
+    </header>
+
+    <div class="flex flex-column h-full pt-8">
+      <main class="flex-grow-1">
         <router-outlet></router-outlet>
-      </div>
-      <div class="grow-0">
+      </main>
+      <footer class="flex-grow-0">
         <app-footer></app-footer>
-      </div>
+      </footer>
     </div>
   `
 })

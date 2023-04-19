@@ -5,6 +5,8 @@ import {InvoicesComponent} from "./invoices/invoices.component";
 import {RouterOutlet} from "@angular/router";
 import {ThemeModule} from "../@theme/theme.module";
 import {InvoicesManagementRoutingModule} from "./invoices-management-routing.module";
+import {CardModule} from "primeng/card";
+import {ButtonModule} from "primeng/button";
 
 
 @NgModule({
@@ -16,7 +18,9 @@ import {InvoicesManagementRoutingModule} from "./invoices-management-routing.mod
     CommonModule,
     InvoicesManagementRoutingModule,
     ThemeModule,
-    RouterOutlet
+    RouterOutlet,
+    CardModule,
+    ButtonModule
   ]
 })
 export class InvoicesManagementModule { }

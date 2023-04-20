@@ -7,6 +7,7 @@ import {ThemeModule} from "../@theme/theme.module";
 import {InvoicesManagementRoutingModule} from "./invoices-management-routing.module";
 import {CardModule} from "primeng/card";
 import {ButtonModule} from "primeng/button";
+import {TableModule} from "primeng/table";
 
 
 @NgModule({
@@ -20,7 +21,8 @@ import {ButtonModule} from "primeng/button";
     ThemeModule,
     RouterOutlet,
     CardModule,
-    ButtonModule
+    ButtonModule,
+    TableModule
   ]
 })
 export class InvoicesManagementModule { }

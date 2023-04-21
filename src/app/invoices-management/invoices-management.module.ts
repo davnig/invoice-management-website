@@ -10,6 +10,7 @@ import {TableModule} from "primeng/table";
 import {TagModule} from "primeng/tag";
 import {TagSeverityPipe} from "./@core/pipes/TagSeverityPipe";
 import {ChartModule} from "primeng/chart";
+import {ButtonModule} from "primeng/button";
 
 
 @NgModule({
@@ -26,7 +27,8 @@ import {ChartModule} from "primeng/chart";
     CardModule,
     TableModule,
     TagModule,
-    ChartModule
+    ChartModule,
+    ButtonModule
   ]
 })
 export class InvoicesManagementModule { }

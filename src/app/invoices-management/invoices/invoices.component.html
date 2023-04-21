@@ -1,6 +1,10 @@
 <div class="p-5 h-full">
   <app-card>
-    <p class="mt-0 font-medium text-lg">Ultime fatture</p>
+    <div class="flex align-items-center justify-content-between mb-5">
+      <p class="mt-0 font-medium text-lg">Ultime fatture</p>
+      <p-button styleClass="p-button-primary p-button-outlined p-button-sm" icon="pi pi-plus"
+                label="Nuova fattura"></p-button>
+    </div>
     <p-table
       [value]="invoices" [paginator]="true" [rows]="5"
       [scrollable]="true">

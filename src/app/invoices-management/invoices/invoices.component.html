@@ -7,17 +7,27 @@
       <ng-template pTemplate="header">
         <tr>
           <th>#</th>
-          <th style="min-width:8rem">Data</th>
-          <th>Cliente</th>
-          <th>Descrizione</th>
-          <th>Stato</th>
-          <th>Totale</th>
+          <th pSortableColumn="date" style="min-width:8rem">Data
+            <p-sortIcon field="date"></p-sortIcon>
+          </th>
+          <th pSortableColumn="clientName">Cliente
+            <p-sortIcon field="clientName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="description">Descrizione
+            <p-sortIcon field="description"></p-sortIcon>
+          </th>
+          <th pSortableColumn="status">Stato
+            <p-sortIcon field="status"></p-sortIcon>
+          </th>
+          <th pSortableColumn="subtotal">Totale
+            <p-sortIcon field="subtotal"></p-sortIcon>
+          </th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-invoice>
         <tr>
           <td>{{ invoice.number }}</td>
-          <td>{{ invoice.date }}</td>
+          <td>{{ invoice.date | date}}</td>
           <td>{{ invoice.clientName }}</td>
           <td>{{ invoice.description }}</td>
           <td>

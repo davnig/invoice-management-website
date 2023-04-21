@@ -1,6 +1,6 @@
 export interface Invoice {
   number: number,
-  date: string,
+  date: Date,
   clientName: string,
   description: string,
   status: InvoiceStatus,

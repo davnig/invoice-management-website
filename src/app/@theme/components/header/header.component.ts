@@ -10,8 +10,9 @@ export class HeaderComponent {
 
   isMobileMenuOpen = false;
   navItems: navItem[] = [
-    {label: 'Dashboard', route: 'dashboard', active: false},
-    {label: 'Fatture', route: 'invoices', active: false}
+    {label: 'Dashboard', route: 'dashboard'},
+    {label: 'Fatture', route: 'invoices'},
+    {label: 'Clienti', route: 'clients'}
   ]
 
   constructor(
@@ -33,6 +34,5 @@ export class HeaderComponent {
 
 interface navItem {
   label: string,
-  route: string,
-  active: boolean
+  route: string
 }

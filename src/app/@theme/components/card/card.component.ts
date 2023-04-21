@@ -4,7 +4,7 @@ import {Component} from '@angular/core';
   selector: 'app-card',
   styleUrls: ['./card.component.css'],
   template: `
-    <div class="bg-white border-round-lg border-solid border-200 px-5 py-4">
+    <div class="bg-white border-round-lg border-solid border-1 surface-border px-5 py-4">
       <ng-content></ng-content>
     </div>
   `

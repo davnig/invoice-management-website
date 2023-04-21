@@ -9,7 +9,7 @@ import {Component} from '@angular/core';
     </header>
 
     <div class="flex flex-column h-full pt-8">
-      <main class="flex-grow-1">
+      <main class="flex-grow-1" style="background-color: var(--surface-ground)">
         <router-outlet></router-outlet>
       </main>
       <footer class="flex-grow-0">

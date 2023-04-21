@@ -1,35 +1,31 @@
-<div class="bg-gray-100 p-5 h-full">
-
-  <!-- table -->
-
-  <p-table
-    [value]="invoices"
-    [paginator]="true"
-    [rows]="5"
-    [scrollable]="true"
-    [showCurrentPageReport]="true"
-    currentPageReportTemplate="{totalRecords} elementi in totale"
-    [rowsPerPageOptions]="[5, 10, 25, 50]"
-  >
-    <ng-template pTemplate="header">
-      <tr>
-        <th>#</th>
-        <th>Data</th>
-        <th>Cliente</th>
-        <th>Descrizione</th>
-        <th>Totale</th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-invoice>
-      <tr>
-        <td>{{ invoice.number }}</td>
-        <td>{{ invoice.date }}</td>
-        <td>{{ invoice.clientName }}</td>
-        <td>{{ invoice.description }}</td>
-        <td>{{ invoice.subtotal | currency: 'EUR'}}</td>
-      </tr>
-    </ng-template>
-  </p-table>
-
-
+<div class="p-5 h-full">
+  <app-card>
+    <p class="mt-0 font-medium text-lg">Ultime fatture</p>
+    <p-table
+      [value]="invoices" [paginator]="true" [rows]="5"
+      [scrollable]="true">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>#</th>
+          <th style="min-width:8rem">Data</th>
+          <th>Cliente</th>
+          <th>Descrizione</th>
+          <th>Stato</th>
+          <th>Totale</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-invoice>
+        <tr>
+          <td>{{ invoice.number }}</td>
+          <td>{{ invoice.date }}</td>
+          <td>{{ invoice.clientName }}</td>
+          <td>{{ invoice.description }}</td>
+          <td>
+            <p-tag [value]="invoice.status | uppercase" [severity]="invoice.status | severity"></p-tag>
+          </td>
+          <td>{{ invoice.subtotal | currency: 'EUR'}}</td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </app-card>
 </div>

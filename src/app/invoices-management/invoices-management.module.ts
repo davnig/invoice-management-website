@@ -6,14 +6,16 @@ import {RouterOutlet} from "@angular/router";
 import {ThemeModule} from "../@theme/theme.module";
 import {InvoicesManagementRoutingModule} from "./invoices-management-routing.module";
 import {CardModule} from "primeng/card";
-import {ButtonModule} from "primeng/button";
 import {TableModule} from "primeng/table";
+import {TagModule} from "primeng/tag";
+import {TagSeverityPipe} from "./@core/pipes/TagSeverityPipe";
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
-    InvoicesComponent
+    InvoicesComponent,
+    TagSeverityPipe
   ],
   imports: [
     CommonModule,
@@ -21,8 +23,8 @@ import {TableModule} from "primeng/table";
     ThemeModule,
     RouterOutlet,
     CardModule,
-    ButtonModule,
-    TableModule
+    TableModule,
+    TagModule
   ]
 })
 export class InvoicesManagementModule { }

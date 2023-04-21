@@ -9,6 +9,7 @@ import {CardModule} from "primeng/card";
 import {TableModule} from "primeng/table";
 import {TagModule} from "primeng/tag";
 import {TagSeverityPipe} from "./@core/pipes/TagSeverityPipe";
+import {ChartModule} from "primeng/chart";
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {TagSeverityPipe} from "./@core/pipes/TagSeverityPipe";
     RouterOutlet,
     CardModule,
     TableModule,
-    TagModule
+    TagModule,
+    ChartModule
   ]
 })
 export class InvoicesManagementModule { }

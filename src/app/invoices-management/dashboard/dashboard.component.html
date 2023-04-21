@@ -1,23 +1,42 @@
 <div class="p-5 h-full">
-  <div class="grid gap-2">
 
+  <div class="grid gap-2 mb-3">
     <div class="col-12 lg:col">
       <app-card>
-        <div class="flex items-center justify-between text-gray-500">
-          <div class="text-lg font-medium">Fatturato</div>
-        </div>
+        <div class="block text-gray-500 text-lg font-medium">Fatturato stimato</div>
         <p class="text-2xl mb-0 text-gray-800 font-bold">{{revenue | currency : 'EUR'}}</p>
       </app-card>
     </div>
 
     <div class="col-12 lg:col">
       <app-card>
-        <div class="flex items-center justify-between text-gray-500">
-          <div class="text-lg font-medium">Reddito</div>
-        </div>
+        <div class="block text-gray-500 text-lg font-medium">Reddito stimato</div>
         <p class="text-2xl mb-0 text-gray-800 font-bold">{{income | currency : 'EUR'}}</p>
       </app-card>
     </div>
 
+    <div class="col-12 lg:col">
+      <app-card>
+        <div class="block text-gray-500 text-lg font-medium">Fatture in attesa</div>
+        <p class="text-2xl mb-0 text-gray-800 font-bold">{{invoicesStillToBePaid}}</p>
+      </app-card>
+    </div>
+
+    <div class="col-12 lg:col">
+      <app-card>
+        <div class="block text-gray-500 text-lg font-medium">Fatture emesse</div>
+        <p class="text-2xl mb-0 text-gray-800 font-bold">{{invoicesCount}}</p>
+      </app-card>
+    </div>
   </div>
+
+  <div class="grid gap-2 mb-3">
+    <div class="col-12 lg:col-6">
+      <app-card>
+        <div class="block text-gray-500 text-lg font-medium">Panoramica economica</div>
+        <p-chart type="bar" [data]="chartData"></p-chart>
+      </app-card>
+    </div>
+  </div>
+
 </div>

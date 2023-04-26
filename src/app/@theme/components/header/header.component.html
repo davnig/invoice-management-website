@@ -9,9 +9,12 @@
         {{navItem.label}}
       </a>
     </div>
-    <a class=" hidden md:inline p-3 min-w-max border-round-md hover:bg-gray-100 active:bg-gray-200"
-       [routerLink]="['/login']">
-      Log in
+
+
+    <a class="hidden md:inline"
+       [routerLink]="['profile']">
+      <p-avatar image="https://primefaces.org/cdn/primeng/images/demo/avatar/asiyajavayant.png"
+                size="large" shape="circle"></p-avatar>
     </a>
     <div class="-mr-2 flex md:hidden">
       <!-- Mobile menu button -->

@@ -11,13 +11,18 @@ import {TagModule} from "primeng/tag";
 import {TagSeverityPipe} from "./@core/pipes/TagSeverityPipe";
 import {ChartModule} from "primeng/chart";
 import {ButtonModule} from "primeng/button";
+import {ProfileComponent} from './profile/profile.component';
+import {RadioButtonModule} from "primeng/radiobutton";
+import {FormsModule} from "@angular/forms";
+import {DropdownModule} from "primeng/dropdown";
 
 
 @NgModule({
   declarations: [
     DashboardComponent,
     InvoicesComponent,
-    TagSeverityPipe
+    TagSeverityPipe,
+    ProfileComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +33,10 @@ import {ButtonModule} from "primeng/button";
     TableModule,
     TagModule,
     ChartModule,
-    ButtonModule
+    ButtonModule,
+    RadioButtonModule,
+    FormsModule,
+    DropdownModule
   ]
 })
 export class InvoicesManagementModule { }

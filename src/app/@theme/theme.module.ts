@@ -8,6 +8,7 @@ import {FooterComponent} from './components/footer/footer.component';
 import {ButtonModule} from "primeng/button";
 import {SidebarModule} from "primeng/sidebar";
 import {CardComponent} from './components/card/card.component';
+import {AvatarModule} from "primeng/avatar";
 
 
 @NgModule({
@@ -25,7 +26,8 @@ import {CardComponent} from './components/card/card.component';
     NgOptimizedImage,
     RouterLinkActive,
     ButtonModule,
-    SidebarModule
+    SidebarModule,
+    AvatarModule
   ],
   exports: [
     HeaderComponent,

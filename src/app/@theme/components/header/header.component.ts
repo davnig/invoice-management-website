@@ -10,7 +10,7 @@ export class HeaderComponent {
 
   isMobileMenuOpen = false;
   navItems: navItem[] = [
-    {label: 'Dashboard', route: 'dashboard'},
+    {label: 'Riepilogo', route: 'dashboard'},
     {label: 'Fatture', route: 'invoices'},
     {label: 'Clienti', route: 'clients'}
   ]

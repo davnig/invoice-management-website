@@ -4,6 +4,7 @@ import {NotFoundComponent} from "../@theme/components/not-found/not-found.compon
 import {DashboardComponent} from "./dashboard/dashboard.component";
 import {InvoicesComponent} from "./invoices/invoices.component";
 import {HeaderContentLayoutComponent} from "../@theme/layouts/header-content/header-content.layout";
+import {ProfileComponent} from "./profile/profile.component";
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
       {
         path: 'invoices',
         component: InvoicesComponent
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent
       },
       {path: '**', component: NotFoundComponent}
     ]

@@ -15,6 +15,7 @@ import {ProfileComponent} from './profile/profile.component';
 import {RadioButtonModule} from "primeng/radiobutton";
 import {FormsModule} from "@angular/forms";
 import {DropdownModule} from "primeng/dropdown";
+import {TaxProfileService} from "./@core/services/tax-profile.service";
 
 
 @NgModule({
@@ -37,6 +38,9 @@ import {DropdownModule} from "primeng/dropdown";
     RadioButtonModule,
     FormsModule,
     DropdownModule
+  ],
+  providers: [
+    TaxProfileService
   ]
 })
 export class InvoicesManagementModule { }

@@ -4,24 +4,22 @@
 
     <div class="flex flex-column gap-2 mt-3">
       <p>Tipologia di regime forfettario:</p>
-      <div class="flex align-items-center">
-        <p-radioButton name="pizza" value="ordinary" [(ngModel)]="flatRateSchemeType"></p-radioButton>
-        <label class="ml-2">Ordinario (IRPEF 15%)</label>
-      </div>
-      <div class="flex align-items-center">
-        <p-radioButton name="pizza" value="startup" [(ngModel)]="flatRateSchemeType"></p-radioButton>
-        <label class="ml-2">Agevolato (IRPEF 5%)</label>
+      <div *ngFor="let flatRateScheme of flatRateSchemeOptions" class="flex align-items-center">
+        <p-radioButton name="category" [value]="flatRateScheme.tax"
+                       [(ngModel)]="taxProfileService.substituteTax"></p-radioButton>
+
+        <label class="ml-2">{{ flatRateScheme.label }}</label>
       </div>
     </div>
-    <div class="flex flex-column gap-2 mt-4">
+    <div class="flex flex-column gap-2 mt-3">
       <p>Coefficiente di redditività:</p>
-      <p-dropdown [options]="profitabilityCoefficientOptions" [(ngModel)]="profitabilityCoefficient"
+      <p-dropdown [options]="profitabilityCoefficientOptions" [(ngModel)]="taxProfileService.profitabilityCoefficient"
                   optionLabel="label"></p-dropdown>
     </div>
-    <div class="flex flex-column gap-2 mt-4">
+    <div class="flex flex-column gap-2 mt-3">
       <p>Cassa previdenziale:</p>
-      <p-dropdown [options]="socialSecurityRegimeOptions" [(ngModel)]="socialSecurityRegime"
-                  optionLabel="label"></p-dropdown>
+      <p-dropdown [options]="socialSecurityRegimeOptions" [(ngModel)]="taxProfileService.socialSecurityRate"
+                  optionLabel="label" optionValue="rate" (onChange)="onChange()"></p-dropdown>
     </div>
   </app-card>
 </div>

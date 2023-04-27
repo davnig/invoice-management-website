@@ -1,18 +1,24 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
 # Compiled output
-/dist
-/tmp
-/out-tsc
-/bazel-out
+/frontend/dist
+/frontend/tmp
+/frontend/out-tsc
+/frontend/bazel-out
+.gradle
+/backend/build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/backend/src/main/**/build/
+!**/backend/src/test/**/build/
+
 
 # Node
-/node_modules
+/frontend/node_modules
 npm-debug.log
 yarn-error.log
 
 # IDEs and editors
-.idea/
+.idea
 .project
 .classpath
 .c9/
@@ -29,13 +35,13 @@ yarn-error.log
 .history/*
 
 # Miscellaneous
-/.angular/cache
+/frontend/.angular/cache
 .sass-cache/
-/connect.lock
-/coverage
-/libpeerconnection.log
+/frontend/connect.lock
+/frontend/coverage
+/frontend/libpeerconnection.log
 testem.log
-/typings
+/frontend/typings
 
 # System files
 .DS_Store

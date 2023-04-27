@@ -1,3 +1,3 @@
 # Invoice Management Website
 
-A web app targeting freelancers who need to manage their invoices.
+A web app for managing clients and invoices.

@@ -1,0 +1,25 @@
+services:
+  
+  db:
+    image: postgres
+    container_name: db
+    ports: 
+      - 5432:5432
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin
+      POSTGRES_DB: postgres
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+  
+  backend:
+    build:
+      context: backend
+      dockerfile: ./Dockerfile
+    container_name: backend
+    depends_on:
+      - db
+    ports:
+      - 9044:8080
+    

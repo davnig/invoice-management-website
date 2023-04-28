@@ -22,4 +22,14 @@ services:
       - db
     ports:
       - 9044:8080
+
+  frontend:
+    build: 
+      context: frontend
+      dockerfile: ./Dockerfile
+    container_name: frontend
+    depends_on:
+      - backend
+    ports:
+      - 4200:80
     

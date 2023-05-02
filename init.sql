@@ -1,3 +1,5 @@
+-- SCHEMA --
+
 CREATE TABLE t_profitability_coefficient (
     id serial,
     coefficient decimal NOT NULL,
@@ -31,31 +33,33 @@ CREATE TABLE t_tax_profile (
 );
 
 CREATE TABLE t_taxable_subject (
+    id serial,
     p_iva varchar(11) NOT NULL,
     first_name varchar(128) NOT NULL,
     last_name varchar(128) NOT NULL,
     tax_code varchar(16) NULL,
     id_tax_profile int NOT NULL, 
-    CONSTRAINT PK_t_taxable_subject PRIMARY KEY (p_iva),
+    CONSTRAINT PK_t_taxable_subject PRIMARY KEY (id),
     CONSTRAINT FK_t_taxable_subject_id_tax_profile FOREIGN KEY (id_tax_profile) REFERENCES t_tax_profile(id)
 );
 
 CREATE TABLE t_client (
+    id serial,
     tax_code varchar(16) NOT NULL,
     name varchar(128) NOT NULL,
     address varchar(255) NOT NULL,
-    CONSTRAINT PK_t_client PRIMARY KEY (tax_code)
+    CONSTRAINT PK_t_client PRIMARY KEY (id)
 );
 
 CREATE TABLE t_invoice (
     id serial,
     number int NOT NULL,
     emission_date timestamp NOT NULL,
-    id_vendor varchar(11) NOT NULL,
-    id_client varchar(16) NOT NULL,
+    id_vendor int NOT NULL,
+    id_client int NOT NULL,
     CONSTRAINT PK_t_invoice PRIMARY KEY (id),
-    CONSTRAINT FK_t_invoice_id_vendor FOREIGN KEY (id_vendor) REFERENCES t_taxable_subject(p_iva),
-    CONSTRAINT FK_t_invoice_id_client FOREIGN KEY (id_client) REFERENCES t_client(tax_code)
+    CONSTRAINT FK_t_invoice_id_vendor FOREIGN KEY (id_vendor) REFERENCES t_taxable_subject(id),
+    CONSTRAINT FK_t_invoice_id_client FOREIGN KEY (id_client) REFERENCES t_client(id)
 );
 
 CREATE TABLE t_billing_item_type (
@@ -73,6 +77,8 @@ CREATE TABLE t_billing_item (
     CONSTRAINT PK_t_billing_item PRIMARY KEY (id),
     CONSTRAINT FK_t_billing_item_id_type FOREIGN KEY (id_type) REFERENCES t_billing_item_type(id)
 );
+
+-- DATA --
 
 INSERT INTO t_social_security VALUES
 (default, 'gestione separata INPS', 0.2623),
@@ -94,7 +100,7 @@ INSERT INTO t_tax_profile VALUES
 (default, 4, 1, 2);
 
 INSERT INTO t_taxable_subject VALUES 
-('0764352056C', 'Davide', 'Rossi', 'DVDRSS91A01L424G', 1);
+(default, '0764352056C', 'Davide', 'Rossi', 'DVDRSS91A01L424G', 1);
 
 --INSERT INTO t_client VALUES ();
 --INSERT INTO t_invoice ();

@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TaxableSubjectRepository extends JpaRepository<TaxableSubject, String> {
 
-    <T> T findByPIVA(String pIVA, Class<T> type);
+    <T> T findById(int id, Class<T> type);
 
 }

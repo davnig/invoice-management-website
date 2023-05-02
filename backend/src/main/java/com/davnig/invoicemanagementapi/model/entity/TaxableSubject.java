@@ -15,7 +15,7 @@ public class TaxableSubject {
     @SequenceGenerator(name = "taxable-subject-id-gen", sequenceName = "t_taxable_subject_id_seq", allocationSize = 1)
     private int id;
     @Column(name = "p_iva")
-    private String pIVA;
+    private String piva;
     private String firstName;
     private String lastName;
     private String taxCode;

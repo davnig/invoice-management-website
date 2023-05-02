@@ -1,6 +1,6 @@
 package com.davnig.invoicemanagementapi.controller;
 
-import com.davnig.invoicemanagementapi.model.entity.TaxableSubject;
+import com.davnig.invoicemanagementapi.model.dto.TaxableSubjectOverview;
 import com.davnig.invoicemanagementapi.repository.TaxableSubjectRepository;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +18,16 @@ public class TaxableSubjectController {
         this.taxableSubjectRepository = taxableSubjectRepository;
     }
 
-    @GetMapping("/{pIVA}")
-    public ResponseEntity<TaxableSubject> findByPIVA(@PathVariable String pIVA) {
-        return ResponseEntity.ok(taxableSubjectRepository.findByPIVA(pIVA, TaxableSubject.class));
+
+//    @GetMapping
+//    public ResponseEntity<List<TaxableSubject>> findAll() {
+//        return ResponseEntity.ok(taxableSubjectRepository.findAll());
+//    }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findById(@PathVariable(name = "id") int id) {
+        TaxableSubjectOverview byId = taxableSubjectRepository.findById(id, TaxableSubjectOverview.class);
+        return ResponseEntity.ok(byId);
     }
 
 }

@@ -1,20 +1,21 @@
 CREATE TABLE t_profitability_coefficient (
     id serial,
-    coefficient int NOT NULL,
+    coefficient decimal NOT NULL,
+    description varchar(256) NULL,
     CONSTRAINT PK_t_profitability_coefficient PRIMARY KEY (id)
 );
 
 CREATE TABLE t_social_security (
     id serial,
     name varchar(128) NOT NULL,
-    rate int NOT NULL,
+    rate decimal NOT NULL,
     CONSTRAINT PK_t_social_security PRIMARY KEY (id)
 );
 
 CREATE TABLE t_flat_rate_scheme (
     id serial,
     name varchar(128) NOT NULL,
-    rate int NOT NULL,
+    rate decimal NOT NULL,
     CONSTRAINT PK_t_flat_rate_scheme PRIMARY KEY (id)
 );
 
@@ -72,3 +73,28 @@ CREATE TABLE t_billing_item (
     CONSTRAINT PK_t_billing_item PRIMARY KEY (id),
     CONSTRAINT FK_t_billing_item_id_type FOREIGN KEY (id_type) REFERENCES t_billing_item_type(id)
 );
+
+INSERT INTO t_social_security VALUES
+(default, 'gestione separata INPS', 0.2623),
+(default, 'inarcassa', 0.1450);
+
+INSERT INTO t_profitability_coefficient VALUES
+(default, 0.40, 'alloggio e ristorazione, commercio al dettaglio e all''ingrosso, commercio di alimenti e bevande, industrie alimentari e delle bevande'),
+(default, 0.54, 'commercio ambulante non alimentare'),
+(default, 0.62, 'intermediari del commercio'),
+(default, 0.67, 'altre attività economiche'),
+(default, 0.78, 'attività professionali, scientifiche, tecniche, sanitarie di istruzione, servizi finanziari e assicurativi'),
+(default, 0.86, 'costruzione e attività immobiliari');
+
+INSERT INTO t_flat_rate_scheme VALUES
+(default, 'ordinario', 0.15),
+(default, 'startup', 0.05);
+
+INSERT INTO t_tax_profile VALUES 
+(default, 4, 1, 2);
+
+INSERT INTO t_taxable_subject VALUES 
+('0764352056C', 'Davide', 'Rossi', 'DVDRSS91A01L424G', 1);
+
+--INSERT INTO t_client VALUES ();
+--INSERT INTO t_invoice ();

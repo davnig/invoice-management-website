@@ -15,6 +15,7 @@ public class ProfitabilityCoefficient {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int id;
-    private int coefficient;
+    private float coefficient;
+    private String description;
 
 }

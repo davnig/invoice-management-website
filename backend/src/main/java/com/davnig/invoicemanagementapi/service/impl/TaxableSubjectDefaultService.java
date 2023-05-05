@@ -35,6 +35,7 @@ import java.lang.reflect.Field;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -67,7 +68,18 @@ public class TaxableSubjectDefaultService implements TaxableSubjectService {
 
     @Override
     public Page<TaxableSubjectSummary> findAll(Paginating paginating, List<String> fields) {
-        return null;
+        Pageable pageable = PageRequest.of(paginating.getPage(),
+                paginating.getLimit(),
+                SortConverter.parse(paginating.getSort()));
+        QBean<TaxableSubject> entityProjection = createEntityProjectionFrom(fields);
+        JPAQuery<TaxableSubject> baseQuery = jpaQueryFactory
+                .select(entityProjection)
+                .from(Q_ENTITY);
+        JPQLQuery<TaxableSubject> query = this.querydsl.applyPagination(pageable, baseQuery);
+        List<TaxableSubjectSummary> results = query.fetch().stream()
+                .map(TaxableSubjectSummary::new)
+                .collect(Collectors.toList());
+        return PageableExecutionUtils.getPage(results, pageable, query::fetchCount);
     }
 
     @Override

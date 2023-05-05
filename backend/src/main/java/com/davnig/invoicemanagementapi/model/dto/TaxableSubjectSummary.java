@@ -9,11 +9,11 @@ import lombok.NoArgsConstructor;
 public class TaxableSubjectSummary {
 
     private String piva;
-    private String fullName;
+    private String taxCode;
 
     public TaxableSubjectSummary(TaxableSubject entity) {
         this.piva = entity.getPiva();
-        this.fullName = entity.getFirstName() + " " + entity.getLastName();
+        this.taxCode = entity.getTaxCode();
     }
 
 }

@@ -68,9 +68,7 @@ public class TaxableSubjectDefaultService implements TaxableSubjectService {
 
     @Override
     public Page<TaxableSubjectSummary> findAll(Paginating paginating, List<String> fields) {
-        Pageable pageable = PageRequest.of(paginating.getPage(),
-                paginating.getLimit(),
-                SortConverter.parse(paginating.getSort()));
+        Pageable pageable = paginating.getPageable();
         QBean<TaxableSubject> entityProjection = createEntityProjectionFrom(fields);
         JPAQuery<TaxableSubject> baseQuery = jpaQueryFactory
                 .select(entityProjection)
@@ -84,9 +82,7 @@ public class TaxableSubjectDefaultService implements TaxableSubjectService {
 
     @Override
     public Page<TaxableSubjectSummary> findAll(Paginating paginating) {
-        Pageable pageable = PageRequest.of(paginating.getPage(),
-                paginating.getLimit(),
-                SortConverter.parse(paginating.getSort()));
+        Pageable pageable = paginating.getPageable();
         JPAQuery<TaxableSubjectSummary> baseQuery = jpaQueryFactory
                 .select(Projections.constructor(TaxableSubjectSummary.class, Q_ENTITY))
                 .from(Q_ENTITY);

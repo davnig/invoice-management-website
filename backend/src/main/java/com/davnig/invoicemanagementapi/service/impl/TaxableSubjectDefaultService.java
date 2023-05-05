@@ -2,6 +2,7 @@ package com.davnig.invoicemanagementapi.service.impl;
 
 import com.davnig.invoicemanagementapi.model.dto.Paginating;
 import com.davnig.invoicemanagementapi.model.dto.SortConverter;
+import com.davnig.invoicemanagementapi.model.dto.TaxableSubjectDetail;
 import com.davnig.invoicemanagementapi.model.dto.TaxableSubjectSummary;
 import com.davnig.invoicemanagementapi.model.entity.QTaxableSubject;
 import com.davnig.invoicemanagementapi.model.entity.TaxableSubject;
@@ -83,16 +84,18 @@ public class TaxableSubjectDefaultService implements TaxableSubjectService {
     }
 
     @Override
-    public TaxableSubject findById(int id) {
-        return taxableSubjectRepository.findById(id).orElseThrow(EntityNotFoundException::new);
+    public TaxableSubjectDetail findById(int id) {
+        return taxableSubjectRepository.findById(id).map(TaxableSubjectDetail::new)
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
-    public TaxableSubject findById(int id, List<String> fields) {
+    public TaxableSubjectDetail findById(int id, List<String> fields) {
         QBean<TaxableSubject> entityProjection = createEntityProjectionFrom(fields);
         Optional<TaxableSubject> taxableSubjectOpt = Optional.ofNullable(
                 jpaQueryFactory.select(entityProjection).from(Q_ENTITY).where(Q_ENTITY.id.eq(id)).fetchOne());
-        return taxableSubjectOpt.orElseThrow(EntityNotFoundException::new);
+        return taxableSubjectOpt.map(TaxableSubjectDetail::new)
+                .orElseThrow(EntityNotFoundException::new);
     }
 
     @SneakyThrows

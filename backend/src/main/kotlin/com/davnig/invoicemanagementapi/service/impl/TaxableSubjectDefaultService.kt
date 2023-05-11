@@ -7,11 +7,13 @@ import com.davnig.invoicemanagementapi.model.entity.QTaxableSubject
 import com.davnig.invoicemanagementapi.model.entity.TaxableSubject
 import com.davnig.invoicemanagementapi.repository.TaxableSubjectRepository
 import com.davnig.invoicemanagementapi.service.TaxableSubjectService
-import com.querydsl.core.types.EntityPath
+import com.querydsl.core.BooleanBuilder
 import com.querydsl.core.types.Path
 import com.querydsl.core.types.Projections
 import com.querydsl.core.types.QBean
+import com.querydsl.core.types.dsl.NumberPath
 import com.querydsl.core.types.dsl.PathBuilder
+import com.querydsl.core.types.dsl.StringPath
 import com.querydsl.jpa.impl.JPAQueryFactory
 import jakarta.persistence.EntityManager
 import jakarta.persistence.EntityNotFoundException
@@ -27,6 +29,7 @@ import org.springframework.data.support.PageableExecutionUtils
 import org.springframework.stereotype.Service
 import java.lang.reflect.Field
 
+
 @Service
 class TaxableSubjectDefaultService(
     private val taxableSubjectRepository: TaxableSubjectRepository,
@@ -35,16 +38,15 @@ class TaxableSubjectDefaultService(
 
     @Autowired
     private lateinit var jpaQueryFactory: JPAQueryFactory
-    private val Q_ENTITY: QTaxableSubject = QTaxableSubject.taxableSubject
+    private val qEntity: QTaxableSubject = QTaxableSubject.taxableSubject
     private val querydsl: Querydsl
 
     init {
         val entityInfo: JpaEntityInformation<TaxableSubject, *> =
             JpaEntityInformationSupport.getEntityInformation(TaxableSubject::class.java, entityManager)
-        val entityPath: EntityPath<TaxableSubject> =
-            SimpleEntityPathResolver.INSTANCE.createPath(entityInfo.javaType)
-        val pathBuilder: PathBuilder<TaxableSubject> = PathBuilder<TaxableSubject>(entityPath.type, entityPath.metadata)
-        querydsl = Querydsl(entityManager, pathBuilder)
+        val entityPath = SimpleEntityPathResolver.INSTANCE.createPath(entityInfo.javaType)
+        val entityPathBuilder: PathBuilder<TaxableSubject> = PathBuilder(entityPath.type, entityPath.metadata)
+        querydsl = Querydsl(entityManager, entityPathBuilder)
     }
 
 
@@ -53,7 +55,17 @@ class TaxableSubjectDefaultService(
     }
 
     override fun findAll(paginating: Paginating, search: String): Page<TaxableSubjectSummary> {
-        TODO("Not yet implemented")
+        val pageable = paginating.getPageable()
+        val decodedSearchMap = getSearchMap(search)
+        val predicate = buildPredicateFromSearchMap(decodedSearchMap)
+        val query = querydsl.applyPagination(
+            pageable, jpaQueryFactory
+                .select(Projections.constructor(TaxableSubjectSummary::class.java, qEntity))
+                .from(qEntity)
+                .where(predicate)
+        )
+        val entities = query.fetch()
+        return PageableExecutionUtils.getPage(entities, pageable) { query.fetchCount() }
     }
 
     override fun findAll(paginating: Paginating, fields: List<String>): Page<TaxableSubjectSummary> {
@@ -62,7 +74,7 @@ class TaxableSubjectDefaultService(
         val query = querydsl.applyPagination(
             pageable, jpaQueryFactory
                 .select(entityProjection)
-                .from(Q_ENTITY)
+                .from(qEntity)
         )
         val entities = query.fetch().map { entity -> TaxableSubjectSummary(entity) }
         return PageableExecutionUtils.getPage(entities, pageable) { query.fetchCount() }
@@ -72,8 +84,8 @@ class TaxableSubjectDefaultService(
         val pageable = paginating.getPageable()
         val query = querydsl.applyPagination(
             pageable, jpaQueryFactory
-                .select(Projections.constructor(TaxableSubjectSummary::class.java, Q_ENTITY))
-                .from(Q_ENTITY)
+                .select(Projections.constructor(TaxableSubjectSummary::class.java, qEntity))
+                .from(qEntity)
         )
         val entities = query.fetch()
         return PageableExecutionUtils.getPage(entities, pageable) { query.fetchCount() }
@@ -88,10 +100,34 @@ class TaxableSubjectDefaultService(
         val entityProjection = createEntityProjectionFrom(fields)
         val query = jpaQueryFactory
             .select(entityProjection)
-            .from(Q_ENTITY)
-            .where(Q_ENTITY.id.eq(id))
+            .from(qEntity)
+            .where(qEntity.id.eq(id))
         val entity = query.fetchOne() ?: throw EntityNotFoundException()
         return TaxableSubjectDetail(entity)
+    }
+
+    private fun buildPredicateFromSearchMap(searchMap: Map<String, String>): BooleanBuilder {
+        val predicate = BooleanBuilder()
+        for ((searchKey, searchValue) in searchMap.entries) {
+            val qClass = QTaxableSubject::class.java
+            if (qClass.declaredFields.any { field -> field.name.equals(searchKey) }) {
+                when (val qFieldPath = qClass.getDeclaredField(searchKey).get(qEntity)) {
+                    is StringPath -> predicate.and(qFieldPath.eq(searchValue))
+                    is NumberPath<*> -> predicate.and(qFieldPath.stringValue().eq(searchValue))
+                }
+            }
+        }
+        return predicate
+    }
+
+    private fun getSearchMap(search: String): MutableMap<String, String> {
+        val searchMap = mutableMapOf<String, String>()
+        val regex = Regex("(\\w+):(\\w+)")
+        for (matchResult in regex.findAll(search)) {
+            val (param, value) = matchResult.destructured
+            searchMap[param] = value
+        }
+        return searchMap
     }
 
     @SneakyThrows
@@ -101,7 +137,7 @@ class TaxableSubjectDefaultService(
         for (field in fields) {
             if (qDeclaredFields.any { qField -> qField.name == field }) {
                 val qField = QTaxableSubject::class.java.getDeclaredField(field)
-                qFieldPaths.add(qField.get(Q_ENTITY) as Path<*>)
+                qFieldPaths.add(qField.get(qEntity) as Path<*>)
             }
         }
         return Projections.bean(TaxableSubject::class.java, *qFieldPaths.toTypedArray())

@@ -62,20 +62,22 @@ CREATE TABLE t_invoice (
     CONSTRAINT FK_t_invoice_id_client FOREIGN KEY (id_client) REFERENCES t_client(id)
 );
 
-CREATE TABLE t_billing_item_type (
+CREATE TABLE t_invoice_item_type (
     id serial,
     name varchar(255) NOT NULL,
-    CONSTRAINT PK_t_billing_item_type PRIMARY KEY (id)
+    CONSTRAINT PK_t_invoice_item_type PRIMARY KEY (id)
 );
 
-CREATE TABLE t_billing_item (
+CREATE TABLE t_invoice_item (
     id serial,
     description varchar(255) NOT NULL,
     quantity int NOT NULL,
     price int NOT NULL,
     id_type int NOT NULL,
-    CONSTRAINT PK_t_billing_item PRIMARY KEY (id),
-    CONSTRAINT FK_t_billing_item_id_type FOREIGN KEY (id_type) REFERENCES t_billing_item_type(id)
+    id_invoice int NOT NULL,
+    CONSTRAINT PK_t_invoice_item PRIMARY KEY (id),
+    CONSTRAINT FK_t_invoice_item_id_type FOREIGN KEY (id_type) REFERENCES t_invoice_item_type(id),
+    CONSTRAINT FK_t_invoice_item_id_invoice FOREIGN KEY (id_invoice) REFERENCES t_invoice(id)
 );
 
 -- DATA --
@@ -100,7 +102,38 @@ INSERT INTO t_tax_profile VALUES
 (default, 4, 1, 2);
 
 INSERT INTO t_taxable_subject VALUES 
-(default, '0764352056C', 'Davide', 'Rossi', 'DVDRSS91A01L424G', 1);
+(default, '0764352056C', 'Davide', 'Rossi', 'DVDRSS91A01L424G', 1),
+(default, '398G1380921', 'Marco', 'Stussi', 'STSMRC91B20A074D', 1),
+(default, '740947406B5', 'Giovanni', 'Rosato', 'RSTGNN91P20L716V', 1),
+(default, '17476T80843', 'Federica', 'Amabile', 'MBLFRC92E51H502W', 1);
 
---INSERT INTO t_client VALUES ();
---INSERT INTO t_invoice ();
+INSERT INTO t_invoice_item_type VALUES
+(default, 'Servizio'),
+(default, 'Prodotto');
+
+INSERT INTO t_client VALUES
+(default, 'MLSRRP70B01E256X', 'Ottica S.p.a.', 'via Milano 4'),
+(default, 'RSTPRZ09L41A588Q', 'Maria Luisa Ristagno', 'via Roma 5'),
+(default, 'BSCRFA92D01C149G', 'Arif Buscato', 'via Trieste 2'),
+(default, 'SVDMLR33P01M003C', 'Emanuele Rocco Savreda', 'via Bologna 1'),
+(default, 'GNLMLN50S41F898M', 'Marlene Gioanola', 'via Sturari 12');
+
+INSERT INTO t_invoice VALUES
+(default, 1, '2021-03-20 10:01', 1, 1),
+(default, 2, '2022-04-21 12:21', 1, 1),
+(default, 3, '2022-05-21 13:24', 1, 1),
+(default, 4, '2022-09-21 16:32', 1, 1),
+(default, 5, '2021-01-21 12:09', 1, 2),
+(default, 6, '2021-01-21 16:10', 1, 2),
+(default, 7, '2022-02-27 17:21', 1, 3);
+
+INSERT INTO t_invoice_item VALUES
+(default, 'Consulenza informatica', 1, 500, 1, 1),
+(default, 'Collaborazione Aprile 2022', 1, 3500, 1, 2),
+(default, 'Collaborazione Marzo 2022', 1, 3250, 1, 2),
+(default, 'Collaborazione Febbraio 2022', 1, 3300, 1, 2),
+(default, 'Progetto sito web', 1, 5000, 1, 3),
+(default, 'Progetto API', 1, 8200, 1, 4),
+(default, 'Revisione sito web', 1, 600, 1, 5),
+(default, 'Realizzazione sito web', 1, 1500, 1, 6),
+(default, 'Configurazione applicativo', 1, 200, 1, 7);

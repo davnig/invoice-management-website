@@ -4,7 +4,7 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "t_billing_item")
-class BillingItem {
+class InvoiceItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "billing-item-id-gen")
@@ -12,7 +12,7 @@ class BillingItem {
     var id = 0
 
     @ManyToOne
-    var type: BillingItemType? = null
+    var type: InvoiceItemType? = null
     var description: String? = null
     var price = 0
     var quantity = 0

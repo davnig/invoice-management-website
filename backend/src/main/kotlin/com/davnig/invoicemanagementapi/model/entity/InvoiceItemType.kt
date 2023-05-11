@@ -4,7 +4,7 @@ import jakarta.persistence.*
 
 @Entity
 @Table(name = "t_billing_item_type")
-class BillingItemType {
+class InvoiceItemType {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "billing-item-type-id-gen")

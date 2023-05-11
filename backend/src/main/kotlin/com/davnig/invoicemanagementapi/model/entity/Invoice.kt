@@ -22,4 +22,7 @@ class Invoice {
     @JoinColumn(name = "id_client")
     var client: Client? = null
 
+    @OneToMany
+    var items: List<InvoiceItem> = mutableListOf()
+
 }

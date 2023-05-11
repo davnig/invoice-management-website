@@ -3,14 +3,16 @@ package com.davnig.invoicemanagementapi.controller
 import com.davnig.invoicemanagementapi.model.dto.Paginating
 import com.davnig.invoicemanagementapi.model.dto.TaxableSubjectDetail
 import com.davnig.invoicemanagementapi.model.dto.TaxableSubjectSummary
-import com.davnig.invoicemanagementapi.service.TaxableSubjectService
+import com.davnig.invoicemanagementapi.service.EntityService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.*
 
 @RestController
 @RequestMapping("/taxable-subjects")
-class TaxableSubjectController(private val taxableSubjectService: TaxableSubjectService) {
+class TaxableSubjectController(
+    private val taxableSubjectService: EntityService<TaxableSubjectSummary, TaxableSubjectDetail>
+) {
 
     @GetMapping
     fun findAll(

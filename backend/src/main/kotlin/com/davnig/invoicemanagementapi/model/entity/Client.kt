@@ -15,6 +15,6 @@ class Client {
     var address: String? = null
 
     @OneToMany
-    var invoices: Set<Invoice>? = null
+    var invoices: Set<Invoice> = mutableSetOf()
 
 }

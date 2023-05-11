@@ -49,15 +49,25 @@ class TaxableSubjectDefaultService(
         querydsl = Querydsl(entityManager, entityPathBuilder)
     }
 
-
     override fun findAll(paginating: Paginating, search: String, fields: List<String>): Page<TaxableSubjectSummary> {
-        TODO("Not yet implemented")
+        val pageable = paginating.getPageable()
+        val entityProjection = createEntityProjectionFrom(fields)
+        val searchMap = getSearchMapFromQueryStr(search)
+        val predicate = buildEqPredicateFromSearchMap(searchMap)
+        val query = querydsl.applyPagination(
+            pageable, jpaQueryFactory
+                .select(entityProjection)
+                .from(qEntity)
+                .where(predicate)
+        )
+        val entities = query.fetch().map { entity -> TaxableSubjectSummary(entity) }
+        return PageableExecutionUtils.getPage(entities, pageable) { query.fetchCount() }
     }
 
     override fun findAll(paginating: Paginating, search: String): Page<TaxableSubjectSummary> {
         val pageable = paginating.getPageable()
-        val decodedSearchMap = getSearchMap(search)
-        val predicate = buildPredicateFromSearchMap(decodedSearchMap)
+        val decodedSearchMap = getSearchMapFromQueryStr(search)
+        val predicate = buildEqPredicateFromSearchMap(decodedSearchMap)
         val query = querydsl.applyPagination(
             pageable, jpaQueryFactory
                 .select(Projections.constructor(TaxableSubjectSummary::class.java, qEntity))
@@ -106,7 +116,7 @@ class TaxableSubjectDefaultService(
         return TaxableSubjectDetail(entity)
     }
 
-    private fun buildPredicateFromSearchMap(searchMap: Map<String, String>): BooleanBuilder {
+    private fun buildEqPredicateFromSearchMap(searchMap: Map<String, String>): BooleanBuilder {
         val predicate = BooleanBuilder()
         for ((searchKey, searchValue) in searchMap.entries) {
             val qClass = QTaxableSubject::class.java
@@ -120,7 +130,7 @@ class TaxableSubjectDefaultService(
         return predicate
     }
 
-    private fun getSearchMap(search: String): MutableMap<String, String> {
+    private fun getSearchMapFromQueryStr(search: String): MutableMap<String, String> {
         val searchMap = mutableMapOf<String, String>()
         val regex = Regex("(\\w+):(\\w+)")
         for (matchResult in regex.findAll(search)) {

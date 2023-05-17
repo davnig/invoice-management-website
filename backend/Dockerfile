@@ -1,10 +1,9 @@
-FROM openjdk:17-jdk AS BUILD_STAGE
-RUN microdnf install findutils
+FROM gradle:jdk17 AS BUILD_STAGE
 WORKDIR /usr/app
-COPY --chown=gradle:gradle . ./
-RUN ./gradlew bootJar || return 1
+COPY . .
+RUN gradle build || return 1
 
-FROM openjdk:17-slim
+FROM openjdk:17-jdk-slim
 WORKDIR /app
-COPY --from=BUILD_STAGE /usr/app/build/libs/app.jar ./
-ENTRYPOINT ["java", "-jar", "app.jar"]
+COPY --from=BUILD_STAGE /usr/app/build/libs/api.jar .
+ENTRYPOINT ["java", "-Dspring.profiles.active=docker", "-jar", "api.jar"]

@@ -47,7 +47,7 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-tasks.withType(KotlinCompile) {
+tasks.withType(KotlinCompile).configureEach {
 	kotlinOptions {
 		freeCompilerArgs = ['-Xjsr305=strict']
 		jvmTarget = '17'
@@ -56,4 +56,8 @@ tasks.withType(KotlinCompile) {
 
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+bootJar {
+	archiveFileName = 'api.jar'
 }

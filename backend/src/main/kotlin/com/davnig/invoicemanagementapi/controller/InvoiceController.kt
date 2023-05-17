@@ -1,8 +1,8 @@
 package com.davnig.invoicemanagementapi.controller
 
-import com.davnig.invoicemanagementapi.model.dto.InvoiceDetail
-import com.davnig.invoicemanagementapi.model.dto.InvoiceSummary
 import com.davnig.invoicemanagementapi.model.dto.Paginating
+import com.davnig.invoicemanagementapi.model.dto.detail.InvoiceDetail
+import com.davnig.invoicemanagementapi.model.dto.summary.InvoiceSummary
 import com.davnig.invoicemanagementapi.service.EntityService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity
@@ -40,4 +40,5 @@ class InvoiceController(
             else -> ResponseEntity.ok(invoiceService.findById(id, fields))
         }
     }
+
 }

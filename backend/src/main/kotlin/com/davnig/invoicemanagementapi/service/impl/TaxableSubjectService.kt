@@ -1,8 +1,8 @@
 package com.davnig.invoicemanagementapi.service.impl
 
 import com.davnig.invoicemanagementapi.model.dto.Paginating
-import com.davnig.invoicemanagementapi.model.dto.TaxableSubjectDetail
-import com.davnig.invoicemanagementapi.model.dto.TaxableSubjectSummary
+import com.davnig.invoicemanagementapi.model.dto.detail.TaxableSubjectDetail
+import com.davnig.invoicemanagementapi.model.dto.summary.TaxableSubjectSummary
 import com.davnig.invoicemanagementapi.model.entity.QTaxableSubject
 import com.davnig.invoicemanagementapi.model.entity.TaxableSubject
 import com.davnig.invoicemanagementapi.repository.TaxableSubjectRepository
@@ -31,7 +31,7 @@ import java.lang.reflect.Field
 
 
 @Service
-class TaxableSubjectDefaultService(
+class TaxableSubjectService(
     private val taxableSubjectRepository: TaxableSubjectRepository,
     entityManager: EntityManager
 ) : EntityService<TaxableSubjectSummary, TaxableSubjectDetail> {

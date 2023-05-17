@@ -1,8 +1,8 @@
 package com.davnig.invoicemanagementapi.controller
 
 import com.davnig.invoicemanagementapi.model.dto.Paginating
-import com.davnig.invoicemanagementapi.model.dto.TaxableSubjectDetail
-import com.davnig.invoicemanagementapi.model.dto.TaxableSubjectSummary
+import com.davnig.invoicemanagementapi.model.dto.detail.TaxableSubjectDetail
+import com.davnig.invoicemanagementapi.model.dto.summary.TaxableSubjectSummary
 import com.davnig.invoicemanagementapi.service.EntityService
 import org.springframework.data.domain.Page
 import org.springframework.http.ResponseEntity

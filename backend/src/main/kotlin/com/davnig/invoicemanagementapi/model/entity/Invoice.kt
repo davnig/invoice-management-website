@@ -1,7 +1,7 @@
 package com.davnig.invoicemanagementapi.model.entity
 
 import jakarta.persistence.*
-import java.sql.Date
+import java.sql.Timestamp
 
 @Entity
 @Table(name = "t_invoice")
@@ -12,17 +12,10 @@ class Invoice {
     @SequenceGenerator(name = "invoice-id-gen", sequenceName = "t_invoice_id_seq", allocationSize = 1)
     var id = 0
     var number = 0
-    var date: Date? = null
 
-    @ManyToOne
-    @JoinColumn(name = "id_vendor")
-    var vendor: TaxableSubject? = null
-
-    @ManyToOne
-    @JoinColumn(name = "id_client")
-    var client: Client? = null
-
-    @OneToMany
-    var items: List<InvoiceItem> = mutableListOf()
+    @Column(name = "emission_date")
+    var date: Timestamp? = null
+    val idVendor = 0
+    val idClient = 0
 
 }

@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository
 
 @Repository
 interface TaxableSubjectRepository : JpaRepository<TaxableSubject, Int>,
-    QuerydslPredicateExecutor<TaxableSubject> {
-}
+    QuerydslPredicateExecutor<TaxableSubject>

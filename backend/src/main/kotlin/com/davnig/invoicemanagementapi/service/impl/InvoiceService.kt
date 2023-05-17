@@ -1,8 +1,8 @@
 package com.davnig.invoicemanagementapi.service.impl
 
-import com.davnig.invoicemanagementapi.model.dto.InvoiceDetail
-import com.davnig.invoicemanagementapi.model.dto.InvoiceSummary
 import com.davnig.invoicemanagementapi.model.dto.Paginating
+import com.davnig.invoicemanagementapi.model.dto.detail.InvoiceDetail
+import com.davnig.invoicemanagementapi.model.dto.summary.InvoiceSummary
 import com.davnig.invoicemanagementapi.model.entity.Invoice
 import com.davnig.invoicemanagementapi.model.entity.QInvoice
 import com.davnig.invoicemanagementapi.repository.InvoiceRepository
@@ -30,7 +30,7 @@ import org.springframework.stereotype.Service
 import java.lang.reflect.Field
 
 @Service
-class InvoiceDefaultService(
+class InvoiceService(
     private val invoiceRepository: InvoiceRepository,
     entityManager: EntityManager
 ) : EntityService<InvoiceSummary, InvoiceDetail> {

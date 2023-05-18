@@ -14,12 +14,6 @@ class InvoiceSummary(
         date = entity.date.toString(),
         idVendor = entity.idVendor,
         idClient = entity.idClient
-//        vendorName = entity.vendor?.firstName + entity.vendor?.lastName,
-//        clientName = entity.client?.name,
-//        total = entity.items.stream()
-//            .map { it.price }
-//            .toList()
-//            .reduce { acc, i -> acc + i } * 1.22
     )
 
 }

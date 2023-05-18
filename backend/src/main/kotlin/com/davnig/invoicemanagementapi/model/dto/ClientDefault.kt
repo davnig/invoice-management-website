@@ -1,8 +1,8 @@
-package com.davnig.invoicemanagementapi.model.dto.summary
+package com.davnig.invoicemanagementapi.model.dto
 
 import com.davnig.invoicemanagementapi.model.entity.Client
 
-class ClientSummary(
+class ClientDefault(
     var taxCode: String? = null,
     var name: String? = null,
     var address: String? = null

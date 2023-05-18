@@ -17,4 +17,6 @@ interface EntityService<S, D> {
 
     fun findById(id: Int, fields: List<String>): D
 
+    fun embedSubResources(id: Int, embed: List<String>, entityResource: D): D
+
 }

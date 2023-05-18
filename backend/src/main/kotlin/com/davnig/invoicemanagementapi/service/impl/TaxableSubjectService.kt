@@ -116,6 +116,14 @@ class TaxableSubjectService(
         return TaxableSubjectDetail(entity)
     }
 
+    override fun embedSubResources(
+        id: Int,
+        embed: List<String>,
+        entityResource: TaxableSubjectDetail
+    ): TaxableSubjectDetail {
+        TODO("Not yet implemented")
+    }
+
     private fun buildEqPredicateFromSearchMap(searchMap: Map<String, String>): BooleanBuilder {
         val predicate = BooleanBuilder()
         for ((searchKey, searchValue) in searchMap.entries) {

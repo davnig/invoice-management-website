@@ -6,6 +6,7 @@ import com.davnig.invoicemanagementapi.model.dto.summary.InvoiceSummary
 import com.davnig.invoicemanagementapi.model.entity.Invoice
 import com.davnig.invoicemanagementapi.model.entity.QInvoice
 import com.davnig.invoicemanagementapi.repository.InvoiceRepository
+import com.davnig.invoicemanagementapi.service.ClientEntityService
 import com.davnig.invoicemanagementapi.service.EntityService
 import com.querydsl.core.BooleanBuilder
 import com.querydsl.core.types.Path
@@ -37,6 +38,9 @@ class InvoiceService(
 
     @Autowired
     private lateinit var jpaQueryFactory: JPAQueryFactory
+
+    @Autowired
+    private lateinit var clientService: ClientEntityService
     private val qEntity: QInvoice = QInvoice.invoice
     private val querydsl: Querydsl
 
@@ -113,6 +117,18 @@ class InvoiceService(
             .where(qEntity.id.eq(id))
         val entity = query.fetchOne() ?: throw EntityNotFoundException()
         return InvoiceDetail(entity)
+    }
+
+    override fun embedSubResources(id: Int, embed: List<String>, entityResource: InvoiceDetail): InvoiceDetail {
+        for (embedding in embed) {
+            when (embedding) {
+                "client" -> {
+                    entityResource.client = clientService.findByInvoiceId(id)
+                    entityResource.idClient = null
+                }
+            }
+        }
+        return entityResource
     }
 
     private fun buildEqPredicateFromSearchMap(searchMap: Map<String, String>): BooleanBuilder {

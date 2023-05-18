@@ -33,11 +33,22 @@ class InvoiceController(
     @GetMapping("/{id}")
     fun findById(
         @PathVariable id: Int,
-        @RequestParam(required = false) fields: List<String>?
+        @RequestParam(required = false) fields: List<String>?,
+        @RequestParam(required = false) embed: List<String>?
     ): ResponseEntity<InvoiceDetail> {
         return when {
-            (fields == null) -> ResponseEntity.ok(invoiceService.findById(id))
-            else -> ResponseEntity.ok(invoiceService.findById(id, fields))
+            (fields != null && embed != null) -> {
+                val dto = invoiceService.findById(id, fields)
+                return ResponseEntity.ok(invoiceService.embedSubResources(id, embed, dto))
+            }
+
+            (fields != null) -> ResponseEntity.ok(invoiceService.findById(id, fields))
+            (embed != null) -> {
+                val dto = invoiceService.findById(id)
+                return ResponseEntity.ok(invoiceService.embedSubResources(id, embed, dto))
+            }
+
+            else -> ResponseEntity.ok(invoiceService.findById(id))
         }
     }
 

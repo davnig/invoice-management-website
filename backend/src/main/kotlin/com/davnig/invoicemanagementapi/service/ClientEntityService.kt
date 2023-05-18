@@ -1,9 +1,9 @@
 package com.davnig.invoicemanagementapi.service
 
-import com.davnig.invoicemanagementapi.model.dto.summary.ClientSummary
+import com.davnig.invoicemanagementapi.model.dto.ClientDefault
 
-interface ClientEntityService : EntityService<ClientSummary, ClientSummary> {
+interface ClientEntityService : EntityService<ClientDefault, ClientDefault> {
 
-    fun findByInvoiceId(invoiceId: Int): ClientSummary
+    fun findByInvoiceId(invoiceId: Int): ClientDefault
 
 }

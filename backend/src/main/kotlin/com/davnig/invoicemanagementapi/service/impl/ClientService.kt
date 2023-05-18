@@ -1,7 +1,7 @@
 package com.davnig.invoicemanagementapi.service.impl
 
+import com.davnig.invoicemanagementapi.model.dto.ClientDefault
 import com.davnig.invoicemanagementapi.model.dto.Paginating
-import com.davnig.invoicemanagementapi.model.dto.summary.ClientSummary
 import com.davnig.invoicemanagementapi.model.entity.Client
 import com.davnig.invoicemanagementapi.model.entity.Invoice
 import com.davnig.invoicemanagementapi.model.entity.QClient
@@ -48,7 +48,7 @@ class ClientService(
         querydsl = Querydsl(entityManager, entityPathBuilder)
     }
 
-    override fun findAll(paginating: Paginating, search: String, fields: List<String>): Page<ClientSummary> {
+    override fun findAll(paginating: Paginating, search: String, fields: List<String>): Page<ClientDefault> {
         val pageable = paginating.getPageable()
         val entityProjection = createEntityProjectionFrom(fields)
         val searchMap = getSearchMapFromQueryStr(search)
@@ -59,17 +59,17 @@ class ClientService(
                 .from(qEntity)
                 .where(predicate)
         )
-        val entities = query.fetch().map { entity -> ClientSummary(entity) }
+        val entities = query.fetch().map { entity -> ClientDefault(entity) }
         return PageableExecutionUtils.getPage(entities, pageable) { query.fetchCount() }
     }
 
-    override fun findAll(paginating: Paginating, search: String): Page<ClientSummary> {
+    override fun findAll(paginating: Paginating, search: String): Page<ClientDefault> {
         val pageable = paginating.getPageable()
         val decodedSearchMap = getSearchMapFromQueryStr(search)
         val predicate = buildEqPredicateFromSearchMap(decodedSearchMap)
         val query = querydsl.applyPagination(
             pageable, jpaQueryFactory
-                .select(Projections.constructor(ClientSummary::class.java, qEntity))
+                .select(Projections.constructor(ClientDefault::class.java, qEntity))
                 .from(qEntity)
                 .where(predicate)
         )
@@ -77,7 +77,7 @@ class ClientService(
         return PageableExecutionUtils.getPage(entities, pageable) { query.fetchCount() }
     }
 
-    override fun findAll(paginating: Paginating, fields: List<String>): Page<ClientSummary> {
+    override fun findAll(paginating: Paginating, fields: List<String>): Page<ClientDefault> {
         val pageable = paginating.getPageable()
         val entityProjection = createEntityProjectionFrom(fields)
         val query = querydsl.applyPagination(
@@ -85,39 +85,43 @@ class ClientService(
                 .select(entityProjection)
                 .from(qEntity)
         )
-        val entities = query.fetch().map { entity -> ClientSummary(entity) }
+        val entities = query.fetch().map { entity -> ClientDefault(entity) }
         return PageableExecutionUtils.getPage(entities, pageable) { query.fetchCount() }
     }
 
-    override fun findAll(paginating: Paginating): Page<ClientSummary> {
+    override fun findAll(paginating: Paginating): Page<ClientDefault> {
         val pageable = paginating.getPageable()
         val query = querydsl.applyPagination(
             pageable, jpaQueryFactory
-                .select(Projections.constructor(ClientSummary::class.java, qEntity))
+                .select(Projections.constructor(ClientDefault::class.java, qEntity))
                 .from(qEntity)
         )
         val entities = query.fetch()
         return PageableExecutionUtils.getPage(entities, pageable) { query.fetchCount() }
     }
 
-    override fun findById(id: Int): ClientSummary {
+    override fun findById(id: Int): ClientDefault {
         val entity = clientRepository.findByIdOrNull(id) ?: throw EntityNotFoundException()
-        return ClientSummary(entity)
+        return ClientDefault(entity)
     }
 
-    override fun findById(id: Int, fields: List<String>): ClientSummary {
+    override fun findById(id: Int, fields: List<String>): ClientDefault {
         val entityProjection = createEntityProjectionFrom(fields)
         val query = jpaQueryFactory
             .select(entityProjection)
             .from(qEntity)
             .where(qEntity.id.eq(id))
         val entity = query.fetchOne() ?: throw EntityNotFoundException()
-        return ClientSummary(entity)
+        return ClientDefault(entity)
     }
 
-    override fun findByInvoiceId(invoiceId: Int): ClientSummary {
+    override fun embedSubResources(id: Int, embed: List<String>, entityResource: ClientDefault): ClientDefault {
+        TODO("Not yet implemented")
+    }
+
+    override fun findByInvoiceId(invoiceId: Int): ClientDefault {
         val entity = clientRepository.findByInvoiceIdOrNull(invoiceId) ?: throw EntityNotFoundException()
-        return ClientSummary(entity)
+        return ClientDefault(entity)
     }
 
     private fun buildEqPredicateFromSearchMap(searchMap: Map<String, String>): BooleanBuilder {

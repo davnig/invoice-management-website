@@ -6,7 +6,7 @@ import com.davnig.invoicemanagementapi.model.dto.summary.TaxableSubjectSummary
 import com.davnig.invoicemanagementapi.model.entity.QTaxableSubject
 import com.davnig.invoicemanagementapi.model.entity.TaxableSubject
 import com.davnig.invoicemanagementapi.repository.TaxableSubjectRepository
-import com.davnig.invoicemanagementapi.service.EntityService
+import com.davnig.invoicemanagementapi.service.TaxableSubjectEntityService
 import com.querydsl.core.BooleanBuilder
 import com.querydsl.core.types.Path
 import com.querydsl.core.types.Projections
@@ -34,7 +34,7 @@ import java.lang.reflect.Field
 class TaxableSubjectService(
     private val taxableSubjectRepository: TaxableSubjectRepository,
     entityManager: EntityManager
-) : EntityService<TaxableSubjectSummary, TaxableSubjectDetail> {
+) : TaxableSubjectEntityService {
 
     @Autowired
     private lateinit var jpaQueryFactory: JPAQueryFactory
@@ -113,6 +113,11 @@ class TaxableSubjectService(
             .from(qEntity)
             .where(qEntity.id.eq(id))
         val entity = query.fetchOne() ?: throw EntityNotFoundException()
+        return TaxableSubjectDetail(entity)
+    }
+
+    override fun findByInvoiceId(invoiceId: Int): TaxableSubjectDetail {
+        val entity = taxableSubjectRepository.findByInvoiceIdOrNull(invoiceId) ?: throw EntityNotFoundException()
         return TaxableSubjectDetail(entity)
     }
 

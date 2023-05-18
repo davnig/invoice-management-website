@@ -115,13 +115,13 @@ class ClientService(
         return ClientDefault(entity)
     }
 
-    override fun embedSubResources(id: Int, embed: List<String>, entityResource: ClientDefault): ClientDefault {
-        TODO("Not yet implemented")
-    }
-
     override fun findByInvoiceId(invoiceId: Int): ClientDefault {
         val entity = clientRepository.findByInvoiceIdOrNull(invoiceId) ?: throw EntityNotFoundException()
         return ClientDefault(entity)
+    }
+
+    override fun embedSubResources(id: Int, embed: List<String>, entityResource: ClientDefault): ClientDefault {
+        TODO("Not yet implemented")
     }
 
     private fun buildEqPredicateFromSearchMap(searchMap: Map<String, String>): BooleanBuilder {

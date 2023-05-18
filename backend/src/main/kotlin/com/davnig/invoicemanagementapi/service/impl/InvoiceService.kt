@@ -8,6 +8,7 @@ import com.davnig.invoicemanagementapi.model.entity.QInvoice
 import com.davnig.invoicemanagementapi.repository.InvoiceRepository
 import com.davnig.invoicemanagementapi.service.ClientEntityService
 import com.davnig.invoicemanagementapi.service.EntityService
+import com.davnig.invoicemanagementapi.service.TaxableSubjectEntityService
 import com.querydsl.core.BooleanBuilder
 import com.querydsl.core.types.Path
 import com.querydsl.core.types.Projections
@@ -41,6 +42,9 @@ class InvoiceService(
 
     @Autowired
     private lateinit var clientService: ClientEntityService
+
+    @Autowired
+    private lateinit var taxableSubjectEntityService: TaxableSubjectEntityService
     private val qEntity: QInvoice = QInvoice.invoice
     private val querydsl: Querydsl
 
@@ -125,6 +129,11 @@ class InvoiceService(
                 "client" -> {
                     entityResource.client = clientService.findByInvoiceId(id)
                     entityResource.idClient = null
+                }
+
+                "vendor" -> {
+                    entityResource.vendor = taxableSubjectEntityService.findByInvoiceId(id)
+                    entityResource.idVendor = null
                 }
             }
         }

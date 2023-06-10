@@ -60,7 +60,7 @@ class TaxableSubjectService(
                 .from(qEntity)
                 .where(predicate)
         )
-        val entities = query.fetch().map { entity -> TaxableSubjectSummary(entity) }
+        val entities = query.fetch().map { TaxableSubjectSummary(it) }
         return PageableExecutionUtils.getPage(entities, pageable) { query.fetchCount() }
     }
 
@@ -86,7 +86,7 @@ class TaxableSubjectService(
                 .select(entityProjection)
                 .from(qEntity)
         )
-        val entities = query.fetch().map { entity -> TaxableSubjectSummary(entity) }
+        val entities = query.fetch().map { TaxableSubjectSummary(it) }
         return PageableExecutionUtils.getPage(entities, pageable) { query.fetchCount() }
     }
 
@@ -133,7 +133,7 @@ class TaxableSubjectService(
         val predicate = BooleanBuilder()
         for ((searchKey, searchValue) in searchMap.entries) {
             val qClass = QTaxableSubject::class.java
-            if (qClass.declaredFields.any { field -> field.name.equals(searchKey) }) {
+            if (qClass.declaredFields.any { it.name.equals(searchKey) }) {
                 when (val qFieldPath = qClass.getDeclaredField(searchKey).get(qEntity)) {
                     is StringPath -> predicate.and(qFieldPath.eq(searchValue))
                     is NumberPath<*> -> predicate.and(qFieldPath.stringValue().eq(searchValue))

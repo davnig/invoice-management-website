@@ -67,7 +67,7 @@ class InvoiceService(
                 .from(qEntity)
                 .where(predicate)
         )
-        val entities = query.fetch().map { entity -> InvoiceSummary(entity) }
+        val entities = query.fetch().map { InvoiceSummary(it) }
         return PageableExecutionUtils.getPage(entities, pageable) { query.fetchCount() }
     }
 
@@ -93,7 +93,7 @@ class InvoiceService(
                 .select(entityProjection)
                 .from(qEntity)
         )
-        val entities = query.fetch().map { entity -> InvoiceSummary(entity) }
+        val entities = query.fetch().map { InvoiceSummary(it) }
         return PageableExecutionUtils.getPage(entities, pageable) { query.fetchCount() }
     }
 
@@ -144,7 +144,7 @@ class InvoiceService(
         val predicate = BooleanBuilder()
         for ((searchKey, searchValue) in searchMap.entries) {
             val qClass = QInvoice::class.java
-            if (qClass.declaredFields.any { field -> field.name.equals(searchKey) }) {
+            if (qClass.declaredFields.any { it.name.equals(searchKey) }) {
                 when (val qFieldPath = qClass.getDeclaredField(searchKey).get(qEntity)) {
                     is StringPath -> predicate.and(qFieldPath.eq(searchValue))
                     is NumberPath<*> -> predicate.and(qFieldPath.stringValue().eq(searchValue))

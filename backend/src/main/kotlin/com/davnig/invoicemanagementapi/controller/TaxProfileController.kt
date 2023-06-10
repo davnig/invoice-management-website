@@ -17,8 +17,20 @@ class TaxProfileController(
         @RequestParam(required = false) fields: List<String>?,
         @RequestParam(required = false) embed: List<String>?
     ): ResponseEntity<TaxProfileDefault> {
-        return ResponseEntity.ok(taxProfileService.findById(id))
-        // TODO: fields and embed
+        return when {
+            (fields != null && embed != null) -> {
+                val dto = taxProfileService.findById(id, fields)
+                return ResponseEntity.ok(taxProfileService.embedSubResources(id, embed, dto))
+            }
+
+            (fields != null) -> ResponseEntity.ok(taxProfileService.findById(id, fields))
+            (embed != null) -> {
+                val dto = taxProfileService.findById(id)
+                return ResponseEntity.ok(taxProfileService.embedSubResources(id, embed, dto))
+            }
+
+            else -> ResponseEntity.ok(taxProfileService.findById(id))
+        }
     }
 
 

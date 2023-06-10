@@ -59,7 +59,7 @@ class ClientService(
                 .from(qEntity)
                 .where(predicate)
         )
-        val entities = query.fetch().map { entity -> ClientDefault(entity) }
+        val entities = query.fetch().map { ClientDefault(it) }
         return PageableExecutionUtils.getPage(entities, pageable) { query.fetchCount() }
     }
 
@@ -85,7 +85,7 @@ class ClientService(
                 .select(entityProjection)
                 .from(qEntity)
         )
-        val entities = query.fetch().map { entity -> ClientDefault(entity) }
+        val entities = query.fetch().map { ClientDefault(it) }
         return PageableExecutionUtils.getPage(entities, pageable) { query.fetchCount() }
     }
 
@@ -128,7 +128,7 @@ class ClientService(
         val predicate = BooleanBuilder()
         for ((searchKey, searchValue) in searchMap.entries) {
             val qClass = QClient::class.java
-            if (qClass.declaredFields.any { field -> field.name.equals(searchKey) }) {
+            if (qClass.declaredFields.any { it.name.equals(searchKey) }) {
                 when (val qFieldPath = qClass.getDeclaredField(searchKey).get(qEntity)) {
                     is StringPath -> predicate.and(qFieldPath.eq(searchValue))
                     is NumberPath<*> -> predicate.and(qFieldPath.stringValue().eq(searchValue))
@@ -153,7 +153,7 @@ class ClientService(
         val qDeclaredFields: Array<Field> = QClient::class.java.declaredFields
         val qFieldPaths = mutableListOf<Path<*>>()
         for (field in fields) {
-            if (qDeclaredFields.any { qField -> qField.name == field }) {
+            if (qDeclaredFields.any { it.name == field }) {
                 val qField = QClient::class.java.getDeclaredField(field)
                 qFieldPaths.add(qField.get(qEntity) as Path<*>)
             }
